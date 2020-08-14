@@ -1,0 +1,21 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="row row-cols-1 row-cols-md-3">
+		{% if results %}
+			{% for type_pokemon, tipo in results.items %}
+				 <div class="col mb-4">
+				    <div class="card h-100 text-center">
+				      <img src="{{ tipo.sprite }}" class="card-img-top" alt="..." height="150">
+				      <div class="card-body"> 
+				        <h5 class="card-title">{{ tipo.name }}</h5>
+				      </div>
+				    </div>
+				 </div>
+			{% endfor %}
+			{% else %}
+			<div class="h3">No hay pokemons</div>
+		{% endif %}
+	</div>
+{% endblock %}

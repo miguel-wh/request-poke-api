@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %} Lista de pokemons {% endblock %}
+
+{% block content %}
+	<div style="display: flex; justify-content: center;">
+		<div class="col-4 mb-4">
+			<form method="POST">
+				{% csrf_token %}
+			  <div class="form-group">
+	            <label for="limit">limit</label>
+	            <input id="limit" type="text" name="limit" class="form-control">
+	          </div>
+			  <button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+	</div>
+	<div class="row row-cols-1 row-cols-md-3">
+		{% if results %}
+			{% for pokemon, value in results.items %}
+				 <div class="col mb-4">
+				    <div class="card h-100 text-center">
+				      <img src="{{ value.sprite }}" class="card-img-top" alt="..." height="150">
+				      <div class="card-body"> 
+				        <h5 class="card-title">{{ value.name }}</h5>
+				        <a href="../../detalles_pokemon/{{value.name}}/{{value.id_pokemon}}" class="btn btn-danger">Detalles</a>
+				      </div>
+				    </div>
+				 </div>
+			{% endfor %}
+			{% else %}
+			<div class="h3">No hay pokemons</div>
+		{% endif %}
+	</div>
+{% endblock %}

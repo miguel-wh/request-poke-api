@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div style="display: flex; justify-content: center;">
+<div class="card mb-3" style="max-width: 540px;">
+	<div class="row no-gutters">
+		<div class="col-md-4">
+		  <img src="{{sprite}}" class="card-img" alt="...">
+		</div>
+		<div class="col-md-8">
+		  <div class="card-body">
+		    <h5 class="card-title font-weight-bold">Detalles</h5>
+		    <p><span class="font-weight-bold">Peso: </span> {{weight}}</p>
+		    <p><span class="font-weight-bold">Altura:</span> {{height}}</p>
+		    <p><span class="font-weight-bold">Tipo: </span>
+		    {% for detalles, type in tipos.items %}
+				<a href="/tipos_pokemon/{{type.tipo}}"><p>{{type.tipo}}</p> </a>
+			{% endfor %}
+			</p>
+			<p><span class="font-weight-bold">Habilidades:</span>
+			    {% for detalles, ability in habilidades.items %}
+			{{ability}},  
+			{% endfor %}
+			</p>
+
+			<p><span class="font-weight-bold">Movimientos:</span>
+			{% for detalles, move in movimientos.items %}
+			{{move}},  
+			{% endfor %}
+			 </p>
+		  </div>
+		</div>
+	</div>
+</div>
+</div>
+
+
+
+{% endblock %}
+
