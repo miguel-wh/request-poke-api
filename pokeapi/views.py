@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import requests
 
+from .form import FormLimit
+
 def request_pokemons(url, offset):
 	args= {'offset':offset} if offset else {}
 	response= requests.get(url, params=args)
@@ -26,10 +28,17 @@ def get_id_pokemon(url):
     return  results
 
 def home(request):
-	limit = 10
+	limit = 6
 	if request.method == 'POST':
-		limit = request.POST.get('limit')
-		print(limit)
+		form = FormLimit(request.POST)
+		if form.is_valid():
+			#limit = form.data.get('limit')
+			cd = form.cleaned_data
+			limit = cd['limit']
+			print(limit)
+	else:
+		form = FormLimit()
+
 	pokemons = request_pokemons('https://pokeapi.co/api/v2/pokemon/?limit={}'.format(limit),0)
 	dic = {}
 	results = {}
@@ -51,7 +60,8 @@ def home(request):
 			results[contador]= dic		
 
 	return render (request, 'home.html',{
-		'results':results
+		'results':results,
+		'form': form
 		})
 
 def get_detalles(url):
@@ -114,9 +124,17 @@ def detalles_pokemon(requests, id_pokemon,nombre_pokemon):
 def tipos_pokemon(request, id_tipo):
 
 	#url = 'https://pokeapi.co/api/v2/type/?limit=1&offset=1'
-	limit = 5
-	#if request.method == 'POST':
-	#	limit = request.POST.get('limit')
+	limit = 6
+	if request.method == 'POST':
+		form = FormLimit(request.POST)
+		if form.is_valid():
+			#limit = form.data.get('limit')
+			cd = form.cleaned_data
+			limit = cd['limit']
+			print(limit)
+	else:
+		form = FormLimit()
+
 
 
 	url='http://pokeapi.co/api/v2/type/{}'.format(id_tipo)
@@ -144,4 +162,4 @@ def tipos_pokemon(request, id_tipo):
 				print('Break!')
 				break
 
-	return render (request, 'home.html',{'results':results})
+	return render (request, 'home.html',{'results':results, 'form': form})

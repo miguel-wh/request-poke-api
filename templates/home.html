@@ -5,12 +5,16 @@
 {% block content %}
 	<div style="display: flex; justify-content: center;">
 		<div class="col-4 mb-4">
+				{% if form.limit.errors %}
+					<div class="alert alert-danger" role="alert">
+					  {{ form.limit.errors }}
+					</div>
+				{% endif %}
 			<form method="POST">
-				{% csrf_token %}
+			  {% csrf_token %}
 			  <div class="form-group">
-	            <label for="limit">limit</label>
-	            <input id="limit" type="text" name="limit" class="form-control">
-	          </div>
+			  	{{ form.limit }}
+			  </div>
 			  <button type="submit" class="btn btn-primary">Submit</button>
 			</form>
 		</div>
